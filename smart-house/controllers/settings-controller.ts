@@ -3,41 +3,49 @@ import { IObserver } from "../domain/observer";
 import { ObserverType } from "../enums/observer-type-enum";
 
 export class SettingsController implements ISettings {
-    private observers: IObserver[] = [];
+    private _observers: IObserver[] = [];
 
-    temperature: number;
-    light: number;
+    private _temperature: number;
+    private _light: number;
+
+    get temperature(): number {
+        return this._temperature;
+    }
+
+    get light(): number {
+        return this._light;
+    }
 
     attach(observer: IObserver): void {
-       const isExist = this.observers.includes(observer);
+       const isExist = this._observers.includes(observer);
        if (isExist) {
           throw new Error("Settings: Observer has been attached already.");
        }
 
-       this.observers.push(observer);
+       this._observers.push(observer);
     }
 
     detach(observer: IObserver): void {
-        const observerIndex = this.observers.indexOf(observer);
+        const observerIndex = this._observers.indexOf(observer);
         if (observerIndex === -1) {
            throw new Error("Settings: Nonexistent observer.");
         }
 
-        this.observers.splice(observerIndex, 1);
+        this._observers.splice(observerIndex, 1);
     }
 
     notify(observerType: ObserverType): void {
-        const currentObserver = this.observers.find(observer => observer.getType() === observerType);
+        const currentObserver = this._observers.find(observer => observer.getType() === observerType);
         currentObserver?.update(this);
     }
 
     setTemperature(value: number): void {
-        this.temperature = value;
+        this._temperature = value;
         this.notify(ObserverType.TEMPERATURE);
     }
 
     setLight(value: number): void {
-        this.light = value;
+        this._light = value;
         this.notify(ObserverType.LIGHT);
     }
 }

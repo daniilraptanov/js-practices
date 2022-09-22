@@ -2,8 +2,8 @@ import { ObserverType } from "../../enums/observer-type-enum";
 import { IObserver } from "../observer";
 
 export interface ISettings {
-    temperature: number;
-    light: number;
+    readonly temperature: number;
+    readonly light: number;
 
     setTemperature(value: number): void;
     setLight(value: number): void;

@@ -1,5 +1,4 @@
 import { ISettings } from "../domain/models/settings";
-import { IObserver } from "../domain/observer";
 import { SettingsController } from "./settings-controller";
 import { ObserverType } from "../enums/observer-type-enum";
 import { MAX_TEMPERATURE, MIN_TEMPERATURE } from "../constants";
